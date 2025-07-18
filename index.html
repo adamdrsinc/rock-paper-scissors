@@ -4,9 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="basic.js"></script>
+    <script src="basic.js" defer></script>
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
+
+    <div id="header">
+        <div class="logo">Hi</div>
+        <div id="headerItems">
+            <div class="headerItem">Item 1</div>
+            <div class="headerItem">Item 1</div>
+            <div class="headerItem">Item 1</div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="rpsGroup">
+            <h1 id="rpsTitle">Rock, Paper, Scissors!</h1>
+            <div id="rpsButtons">
+                <button name="rockButton" id="rockButton" class="gameButton" value="rock">Rock</button>
+                <button name="paperButton" id="paperButton" class="gameButton" value="paper">Paper</button>
+                <button name="scissorsButton" id="scissorsButton" class="gameButton" value="scissors">Scissors</button>
+            </div>
+        </div>
+
+        <div id="resultsGroup">
+            <h2 id="resultsTitle">Game Results:</h2>
+            <div id="scores">
+                <div id="humanScore" class="scoreTitle">Human Score:</div>
+                <div id="computerScore" class="scoreTitle">Computer Score:</div>
+            </div>
+            <div id="gameResults"></div>    
+        </div>
+        
+
+    </div>
+    <div id="footer">
+        <div class="logo"></div>
+        <div id="footerItems">
+            <div class="footerItem"></div>
+            <div class="footerItem"></div>
+            <div class="footerItem"></div>
+        </div>
+    </div>
+
 </body>
 </html>
