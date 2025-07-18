@@ -74,14 +74,20 @@ body{
     display: flex;
     flex-direction: column;
     align-items: start;
+    gap: 8px;
 }
 
 .gameResult{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 #scores{
     display: flex;
     gap: 16px;
+    padding-bottom: 16px;
+}
+
+.h2Title{
+    font-size: 3em;
 }

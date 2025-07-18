@@ -4,14 +4,27 @@ const scissors = "scissors";
 
 let humanScore = 0;
 let computerScore = 0;
+const maxRounds = 5;
 
 const allButtons = document.querySelectorAll(".gameButton");
 for(const button of allButtons){
     button.addEventListener('click', () => playRound(button.value));
 }
 
+function resetGame(){
+    humanScore = 0;
+    computerScore = 0;
+    updateResults();
 
-function getRoundResult(humanChoice){
+    document.querySelector("#gameResults").innerHTML = "";
+}
+
+function playRound(humanChoice){
+    if(humanScore + computerScore >= maxRounds){
+        resetGame();
+        return;
+    }
+
     let computerChoice = getComputerChoice();
 
     console.log(`Human throws ${humanChoice}!`);
@@ -21,13 +34,17 @@ function getRoundResult(humanChoice){
         return null;
     }
 
+    let result = true;
     if(humanChoice === rock){
-        return computerChoice === scissors ? true : false;
+        result = computerChoice === scissors ? true : false;
     } else if (humanChoice === paper){
-        return computerChoice === rock ? true : false;
+        result = computerChoice === rock ? true : false;
     } else if (humanChoice === scissors){
-        return computerChoice === paper ? true : false;
+        result = computerChoice === paper ? true : false;
     }
+
+    incrementScore(result);
+    addRoundResult(humanChoice, computerChoice, result);
 }
 
 function getComputerChoice(){
@@ -39,12 +56,6 @@ function getComputerChoice(){
     } else {
         return scissors;
     }
-}
-
-function playRound(humanChoice){
-    const result = getRoundResult(humanChoice);
-    incrementScore(result);
-    addRoundResult(humanChoice, computerChoice, result);
 }
 
 function incrementScore(result){
@@ -59,8 +70,8 @@ function addRoundResult(humanChoice, computerChoice, humanWon){
     const resultDiv = document.createElement("div");
     resultDiv.classList.add("gameResult");
 
-    const humanChoiceElement = createChoiceElement(humanChoice);
-    const computerChoiceElement = createChoiceElement(computerChoice);
+    const humanChoiceElement = createChoiceElement("Human", humanChoice);
+    const computerChoiceElement = createChoiceElement("Computer", computerChoice);
    
     let text = humanWon ? "Human wins!" : "Computer Wins!";
     const resultTextElement = document.createElement("p");
@@ -70,13 +81,33 @@ function addRoundResult(humanChoice, computerChoice, humanWon){
     resultDiv.appendChild(computerChoiceElement);
     resultDiv.appendChild(resultTextElement);
 
-    const gameResults = document.getSelection("#gameResults");
+    const gameResults = document.querySelector("#gameResults");
     gameResults.appendChild(resultDiv);
+
+    updateResults();
 }
 
-function createChoiceElement(choiceText){
+function updateResults(){
+    //Change the on screen results
+    const humanScoreEl = document.querySelector("#humanScore");
+    const computerScoreEl = document.querySelector("#computerScore");
+
+    humanScoreEl.textContent = "Human Score: " + humanScore;
+    computerScoreEl.textContent = "Computer Score: " + computerScore;
+
+    if(humanScore + computerScore === maxRounds){
+        const winner = humanScore > computerScore ? "Human" : "Computer";
+        const winnerEl = document.createElement("h2");
+        winnerEl.classList.add("h2Title");
+        winnerEl.textContent = `${winner} wins!`;
+
+        document.querySelector("#gameResults").appendChild(winnerEl);
+    }
+}
+
+function createChoiceElement(player, choiceText){
     const choiceElement = document.createElement("p");
-    choiceElement.textContent = choiceText;
+    choiceElement.textContent = `${player} throws ${choiceText}!`;
 
     return choiceElement;
 }
